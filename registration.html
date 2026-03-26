@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 350px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Register</h2>
+    <form id="regForm">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="date" name="dob" required>
+
+        <select name="department">
+            <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="IT">IT</option>
+        </select>
+
+        <input type="text" name="phone" placeholder="Phone" required>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("regForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+
+    const res = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await res.text();
+    alert(result);
+});
+</script>
+
+</body>
+</html>
